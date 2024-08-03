@@ -27,14 +27,4 @@ class StudentManagement{
     print("Student Added Successfully to Year $academicYear");
 
   }
-
-  /*
-  static void printStudents() {
-    for (int year in _studentsByYear.keys) {
-      print("Year $year:");
-      for (StudentManagement student in _studentsByYear[year]!) {
-        print("  ${student._name} (${student._id})");
-      }
-    }
-  }*/
 }
