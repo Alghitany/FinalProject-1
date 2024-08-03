@@ -1,30 +1,19 @@
 
+class Student {
+  static int _idCounter = 1;
+  final int studentID;
+  final String name;
+  final int age;
+  final String contactDetails;
 
-class StudentManagement{
+  Student({
+    required this.name,
+    required this.age,
+    required this.contactDetails,
+  }) : studentID = _idCounter++;
 
-  static int _studentId = 0;
-  int? _id;
-  String _name;
-  int _age;
-  int _academicYear;
-  String _contactDetails;
-
-  static Map<int, List<StudentManagement>> _studentsByYear = {};
-
-  StudentManagement(this._name, this._age, this._academicYear, this._contactDetails){
-    _id = _studentId;
-  }
-
-  static void registerStudent(String name,int age,int academicYear, String contactDetails){
-    // Register Data
-    _studentId++;
-    StudentManagement student = StudentManagement(name, age, academicYear, contactDetails);
-
-    if (!_studentsByYear.containsKey(academicYear)) {
-      _studentsByYear[academicYear] = [];
-    }
-    _studentsByYear[academicYear]!.add(student);
-    print("Student Added Successfully to Year $academicYear");
-
+  @override
+  String toString() {
+    return 'Student ID: $studentID\nName: $name\nAge: $age\nContact Details: $contactDetails';
   }
 }
