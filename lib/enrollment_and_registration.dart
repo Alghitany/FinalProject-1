@@ -4,11 +4,21 @@ import 'course_management.dart';
 
 class Enrollment {
   Map<int, Map<String, List<Student>>> academicYearEnrollments = {};
+  Map<int, Map<int, List<String>>> studentCompletedCourses = {};
 
   void enroll(Student student, Course course, int academicYear) {
-    course.enrollStudent(student);
-    academicYearEnrollments.putIfAbsent(academicYear, () => {}).putIfAbsent(course.courseCode, () => []).add(student);
-    print('Student ${student.name} enrolled in course ${course.title} for academic year $academicYear');
+    List<String> completedCourses = studentCompletedCourses[student.studentID]?.values.expand((e) => e).toList() ?? [];
+    if (course.enrollStudent(student, completedCourses)) {
+      academicYearEnrollments.putIfAbsent(academicYear, () => {}).putIfAbsent(course.courseCode, () => []).add(student);
+      print('Student ${student.name} enrolled in course ${course.title} for academic year $academicYear');
+    } else {
+      print('Student ${student.name} does not meet prerequisites or the course is at full capacity');
+    }
+  }
+
+  void completeCourse(Student student, String courseCode, int academicYear) {
+    studentCompletedCourses.putIfAbsent(student.studentID, () => {}).putIfAbsent(academicYear, () => []).add(courseCode);
+    print('Student ${student.name} completed course $courseCode in academic year $academicYear');
   }
 
   void listEnrolledStudents(int academicYear, String courseCode) {
